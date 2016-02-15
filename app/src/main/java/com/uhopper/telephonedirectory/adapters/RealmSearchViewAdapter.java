@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.uhopper.telephonedirectory.adapters.views.ContactItemView;
 import com.uhopper.telephonedirectory.data.Contact;
 
 import co.moonmonkeylabs.realmsearchview.RealmSearchAdapter;
@@ -32,20 +33,29 @@ public class RealmSearchViewAdapter extends RealmSearchAdapter<Contact, RealmSea
     }
 
     @Override
-    public ViewHolder onCreateRealmViewHolder(ViewGroup viewGroup, int i) {
-        return null;
+    public ViewHolder onCreateRealmViewHolder(ViewGroup viewGroup, int position) {
+        ViewHolder vh = new ViewHolder(new ContactItemView(viewGroup.getContext()));
+        return vh;
     }
 
     @Override
-    public void onBindRealmViewHolder(ViewHolder viewHolder, int i) {
-
+    public void onBindRealmViewHolder(ViewHolder viewHolder, int position) {
+        final Contact contact = realmResults.get(position);
+        viewHolder.contactItemView.bind(contact);
     }
 
 
     public class ViewHolder extends RealmSearchViewHolder {
 
+        private ContactItemView contactItemView;
+
         public ViewHolder(View itemView) {
             super(itemView);
+        }
+
+        public ViewHolder(ContactItemView contactItemView) {
+            super(contactItemView);
+            this.contactItemView = contactItemView;
         }
     }
 }
