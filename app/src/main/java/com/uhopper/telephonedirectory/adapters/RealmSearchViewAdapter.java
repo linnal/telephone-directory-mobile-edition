@@ -1,11 +1,18 @@
 package com.uhopper.telephonedirectory.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.uhopper.telephonedirectory.R;
+import com.uhopper.telephonedirectory.activities.ContactDetailActivity;
 import com.uhopper.telephonedirectory.adapters.views.ContactItemView;
 import com.uhopper.telephonedirectory.data.Contact;
+import com.uhopper.telephonedirectory.fragments.ContactDetailFragment;
+import com.uhopper.telephonedirectory.utils.Constants;
 
 import co.moonmonkeylabs.realmsearchview.RealmSearchAdapter;
 import co.moonmonkeylabs.realmsearchview.RealmSearchViewHolder;
@@ -42,6 +49,31 @@ public class RealmSearchViewAdapter extends RealmSearchAdapter<Contact, RealmSea
     public void onBindRealmViewHolder(ViewHolder viewHolder, int position) {
         final Contact contact = realmResults.get(position);
         viewHolder.contactItemView.bind(contact);
+
+        viewHolder.itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mTwoPane) {
+                            Bundle arguments = new Bundle();
+                            arguments.putInt(Constants.ARG_ITEM_ID, contact.getId());
+                            ContactDetailFragment fragment = new ContactDetailFragment();
+                            fragment.setArguments(arguments);
+                            activity.getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.item_detail_container, fragment)
+                                    .commit();
+                        } else {
+                            Context context = v.getContext();
+                            Intent intent = new Intent(context, ContactDetailActivity.class);
+                            intent.putExtra(Constants.ARG_ITEM_ID, contact.getId());
+
+                            context.startActivity(intent);
+                        }
+
+
+                    }
+                }
+        );
     }
 
 

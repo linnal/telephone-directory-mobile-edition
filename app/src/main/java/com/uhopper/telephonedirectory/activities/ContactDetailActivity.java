@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.fragments.ContactDetailFragment;
+import com.uhopper.telephonedirectory.utils.Constants;
 
 import butterknife.OnClick;
 
@@ -22,6 +23,8 @@ import butterknife.OnClick;
  * in a {@link ContactListActivity}.
  */
 public class ContactDetailActivity extends AppCompatActivity {
+
+    int id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +49,8 @@ public class ContactDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ContactDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ContactDetailFragment.ARG_ITEM_ID));
+            id = getIntent().getIntExtra(Constants.ARG_ITEM_ID, 0);
+            arguments.putInt(Constants.ARG_ITEM_ID, id);
             ContactDetailFragment fragment = new ContactDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
