@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.1.1_a0ef90fad8b56be0c048ce724070a98330899ba0.jar" />
+    </item>
+    <item
+        jar="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.1.1_41f17eac15d8ccf04a026e29338950185c157787.jar" />
+    </item>
+    <item
+        jar="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.1.1_3a2d507ca5fa7a504c32472a57c1fc390849605a.jar" />
+    </item>
+    <item
+        jar="/usr/local/Cellar/android-sdk/24.0.2/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1_c52c4ac4dd9c3cf95de951f736ad41a3405d1dc4.jar" />
+    </item>
+    <item
+        jar="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_2ec19d019699f7d4f50d0cfa6c290d7ae5126393.jar" />
+    </item>
+    <item
+        jar="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/erinda/AndroidStudioProjects/telephone-directory-mobile-edition/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.1.1_58f0650d81c24857bfa2e83887caaa3f163b334d.jar" />
+    </item>
+
+</items>
