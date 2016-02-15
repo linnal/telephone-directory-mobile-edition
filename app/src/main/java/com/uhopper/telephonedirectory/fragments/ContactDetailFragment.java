@@ -1,4 +1,4 @@
-package com.uhopper.telephonedirectory;
+package com.uhopper.telephonedirectory.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.uhopper.telephonedirectory.activities.ContactDetailActivity;
+import com.uhopper.telephonedirectory.activities.ContactListActivity;
+import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.data.Contact;
 
 /**

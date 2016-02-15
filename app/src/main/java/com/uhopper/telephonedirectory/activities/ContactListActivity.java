@@ -1,4 +1,4 @@
-package com.uhopper.telephonedirectory;
+package com.uhopper.telephonedirectory.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.adapters.RealmSearchViewAdapter;
 
 import butterknife.ButterKnife;

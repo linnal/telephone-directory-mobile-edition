@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ContactListActivity"
+            android:name=".activities.ContactListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,13 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ContactDetailActivity"
+            android:name=".activities.ContactDetailActivity"
             android:label="@string/title_item_detail"
-            android:parentActivityName=".ContactListActivity"
+            android:parentActivityName=".activities.ContactListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ContactListActivity" />
+                android:value=".activities.ContactListActivity" />
         </activity>
     </application>
 
