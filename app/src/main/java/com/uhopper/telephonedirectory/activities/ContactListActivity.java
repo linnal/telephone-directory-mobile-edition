@@ -49,7 +49,7 @@ public class ContactListActivity extends AppCompatActivity {
         assert searchView != null;
 
 
-        if (findViewById(R.id.item_detail_container) != null) {
+        if (findViewById(R.id.contact_detail_container) != null) {
             // If this view is present, then the activity should be in two-pane mode.
             mTwoPane = true;
         }
@@ -69,7 +69,7 @@ public class ContactListActivity extends AppCompatActivity {
             ContactFormFragment fragment = new ContactFormFragment();
             fragment.setArguments(arguments);
             this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
+                    .replace(R.id.contact_detail_container, fragment)
                     .commit();
         } else {
             Intent intent = new Intent(this, ContactFormActivity.class);

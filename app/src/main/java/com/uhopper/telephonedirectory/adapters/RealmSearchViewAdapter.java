@@ -60,7 +60,7 @@ public class RealmSearchViewAdapter extends RealmSearchAdapter<Contact, RealmSea
                             ContactDetailFragment fragment = new ContactDetailFragment();
                             fragment.setArguments(arguments);
                             activity.getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.item_detail_container, fragment)
+                                    .replace(R.id.contact_detail_container, fragment)
                                     .commit();
                         } else {
                             Context context = v.getContext();
