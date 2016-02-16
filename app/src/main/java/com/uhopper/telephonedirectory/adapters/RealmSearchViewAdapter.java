@@ -55,13 +55,7 @@ public class RealmSearchViewAdapter extends RealmSearchAdapter<Contact, RealmSea
                     @Override
                     public void onClick(View v) {
                         if (mTwoPane) {
-                            Bundle arguments = new Bundle();
-                            arguments.putInt(Constants.ARG_ITEM_ID, contact.getId());
-                            ContactDetailFragment fragment = new ContactDetailFragment();
-                            fragment.setArguments(arguments);
-                            activity.getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.contact_detail_container, fragment)
-                                    .commit();
+                            setFragment(contact.getId());
                         } else {
                             Context context = v.getContext();
                             Intent intent = new Intent(context, ContactDetailActivity.class);
@@ -89,5 +83,16 @@ public class RealmSearchViewAdapter extends RealmSearchAdapter<Contact, RealmSea
             super(contactItemView);
             this.contactItemView = contactItemView;
         }
+    }
+
+
+    public void setFragment(int id){
+        Bundle arguments = new Bundle();
+        arguments.putInt(Constants.ARG_ITEM_ID, id);
+        ContactDetailFragment fragment = new ContactDetailFragment();
+        fragment.setArguments(arguments);
+        activity.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contact_detail_container, fragment)
+                .commit();
     }
 }

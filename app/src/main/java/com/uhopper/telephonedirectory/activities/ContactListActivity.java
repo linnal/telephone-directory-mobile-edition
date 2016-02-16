@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.adapters.RealmSearchViewAdapter;
 import com.uhopper.telephonedirectory.fragments.ContactFormFragment;
+import com.uhopper.telephonedirectory.interfaces.ContactDetailListener;
 import com.uhopper.telephonedirectory.utils.Constants;
 
 import butterknife.ButterKnife;
@@ -24,7 +26,7 @@ import io.realm.Realm;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class ContactListActivity extends AppCompatActivity {
+public class ContactListActivity extends AppCompatActivity implements ContactDetailListener{
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -66,6 +68,7 @@ public class ContactListActivity extends AppCompatActivity {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putInt(Constants.ARG_ITEM_ID, -1);
+            arguments.putInt(Constants.ARG_TWO_PANE, 1);
             ContactFormFragment fragment = new ContactFormFragment();
             fragment.setArguments(arguments);
             this.getSupportFragmentManager().beginTransaction()
@@ -74,10 +77,25 @@ public class ContactListActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, ContactFormActivity.class);
             intent.putExtra(Constants.ARG_ITEM_ID, -1);
-            this.startActivity(intent);
+            this.startActivityForResult(intent, Constants.ARG_REQUEST_CODE_FORM);
         }
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        adapter.notifyItemInserted(adapter.getItemCount());
+    }
 
+    @Override
+    public void onUpdate(int id) {
+        Toast.makeText(this, "New contact added", Toast.LENGTH_LONG).show();
+
+        if(adapter != null){
+            adapter.notifyItemInserted(adapter.getItemCount());
+        }
+
+        adapter.setFragment(id);
+    }
 }

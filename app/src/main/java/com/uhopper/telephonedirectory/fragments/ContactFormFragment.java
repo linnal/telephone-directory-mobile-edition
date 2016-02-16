@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.data.Contact;
 import com.uhopper.telephonedirectory.data.RealmDAO;
+import com.uhopper.telephonedirectory.interfaces.ContactDetailListener;
 import com.uhopper.telephonedirectory.utils.Constants;
 
 import butterknife.Bind;
@@ -24,6 +25,7 @@ public class ContactFormFragment extends Fragment {
 
     private Contact contact;
     private Realm realm;
+    private ContactDetailListener detailListener = null;
 
     int id=-1;
 
@@ -47,6 +49,10 @@ public class ContactFormFragment extends Fragment {
         if (getArguments().containsKey(Constants.ARG_ITEM_ID)) {
             id = getArguments().getInt(Constants.ARG_ITEM_ID);
         }
+
+        if (getArguments().containsKey(Constants.ARG_TWO_PANE)) {
+            detailListener = (ContactDetailListener) this.getActivity();
+        }
     }
 
     @Override
@@ -65,6 +71,13 @@ public class ContactFormFragment extends Fragment {
         contact.setPhone(contactPhone.getText().toString());
 
         RealmDAO.saveContact(realm, contact);
+
+        if(detailListener != null){
+            detailListener.onUpdate(contact.getId());
+        }else{
+            this.getActivity().setResult(Constants.ARG_RESPONSE_CODE_FORM);
+            this.getActivity().finish();
+        }
     }
 
     @OnClick(R.id.button_rubrica)
