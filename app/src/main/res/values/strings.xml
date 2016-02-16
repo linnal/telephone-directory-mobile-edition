@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">TelephoneDirectory</string>
-    <string name="title_item_detail">Item Detail</string>
+    <string name="title_item_detail">Contact Detail</string>
+    <string name="fullname">Fullname</string>
+    <string name="phone">Phone Number</string>
+    <string name="rubrica">Import from rubrica</string>
+    <string name="save">Save contact</string>
 </resources>

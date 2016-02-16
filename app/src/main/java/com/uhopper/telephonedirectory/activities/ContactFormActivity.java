@@ -2,34 +2,27 @@ package com.uhopper.telephonedirectory.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.uhopper.telephonedirectory.R;
-import com.uhopper.telephonedirectory.fragments.ContactDetailFragment;
+import com.uhopper.telephonedirectory.fragments.ContactFormFragment;
 import com.uhopper.telephonedirectory.utils.Constants;
 
-import butterknife.OnClick;
-
 /**
- * An activity representing a single Contact detail screen. This
- * activity is only used narrow width devices. On tablet-size devices,
- * contact details are presented side-by-side with a list of contacts
- * in a {@link ContactListActivity}.
+ * Created by erinda on 2/16/16.
  */
-public class ContactDetailActivity extends AppCompatActivity {
+public class ContactFormActivity extends AppCompatActivity {
 
     int id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_detail);
+        setContentView(R.layout.activity_contact_form);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,25 +44,20 @@ public class ContactDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             id = getIntent().getIntExtra(Constants.ARG_ITEM_ID, 0);
             arguments.putInt(Constants.ARG_ITEM_ID, id);
-            ContactDetailFragment fragment = new ContactDetailFragment();
+            ContactFormFragment fragment = new ContactFormFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contact_detail_container, fragment)
+                    .add(R.id.contact_form_container, fragment)
                     .commit();
         }
     }
 
-    @OnClick(R.id.button_edit)
-    public void editContact(View view) {
-        Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            NavUtils.navigateUpTo(this, new Intent(this, ContactListActivity.class));
+            NavUtils.navigateUpTo(this, new Intent(this, ContactDetailActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

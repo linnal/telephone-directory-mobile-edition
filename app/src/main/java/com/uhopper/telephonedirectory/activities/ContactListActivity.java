@@ -1,13 +1,15 @@
 package com.uhopper.telephonedirectory.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.adapters.RealmSearchViewAdapter;
+import com.uhopper.telephonedirectory.fragments.ContactFormFragment;
+import com.uhopper.telephonedirectory.utils.Constants;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -60,8 +62,20 @@ public class ContactListActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_add)
     public void addNewContact(View view) {
-        Snackbar.make(view, "TODO add new contact", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+
+        if (mTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putInt(Constants.ARG_ITEM_ID, -1);
+            ContactFormFragment fragment = new ContactFormFragment();
+            fragment.setArguments(arguments);
+            this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, ContactFormActivity.class);
+            intent.putExtra(Constants.ARG_ITEM_ID, -1);
+            this.startActivity(intent);
+        }
     }
 
 
