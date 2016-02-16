@@ -7,7 +7,7 @@
     >
 
     <Button
-        android:id="@+id/b_rubrica"
+        android:id="@+id/button_rubrica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/rubrica"/>
@@ -63,7 +63,7 @@
         android:padding="16dp"/>
 
     <Button
-        android:id="@+id/b_save"
+        android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"/>

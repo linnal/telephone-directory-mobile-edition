@@ -9,10 +9,13 @@ import android.widget.EditText;
 
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.data.Contact;
+import com.uhopper.telephonedirectory.data.RealmDAO;
 import com.uhopper.telephonedirectory.utils.Constants;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.realm.Realm;
 
 /**
  * Created by erinda on 2/16/16.
@@ -20,6 +23,7 @@ import butterknife.ButterKnife;
 public class ContactFormFragment extends Fragment {
 
     private Contact contact;
+    private Realm realm;
 
     int id=-1;
 
@@ -38,6 +42,8 @@ public class ContactFormFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        realm = Realm.getInstance(this.getContext());
+
         if (getArguments().containsKey(Constants.ARG_ITEM_ID)) {
             id = getArguments().getInt(Constants.ARG_ITEM_ID);
         }
@@ -50,4 +56,20 @@ public class ContactFormFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
+    @OnClick(R.id.button_save)
+    public void onSave(){
+        contact = new Contact();
+        contact.setName(contactName.getText().toString());
+        contact.setSurname(contactSurname.getText().toString());
+        contact.setPhone(contactPhone.getText().toString());
+
+        RealmDAO.saveContact(realm, contact);
+    }
+
+    @OnClick(R.id.button_rubrica)
+    public void importFromRubrica(){
+
+    }
+
 }
