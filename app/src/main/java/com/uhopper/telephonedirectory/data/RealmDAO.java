@@ -1,6 +1,7 @@
 package com.uhopper.telephonedirectory.data;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 
 /**
  * Created by erinda on 2/16/16.
@@ -23,5 +24,10 @@ public class RealmDAO {
         realm.commitTransaction();
 
         return nextID;
+    }
+
+    public static Contact getContactById(Realm realm, int id){
+        RealmQuery<Contact> query = realm.where(Contact.class);
+        return query.equalTo("id", id).findFirst();
     }
 }

@@ -7,14 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.activities.ContactDetailActivity;
 import com.uhopper.telephonedirectory.activities.ContactListActivity;
-import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.data.Contact;
+import com.uhopper.telephonedirectory.data.RealmDAO;
 import com.uhopper.telephonedirectory.utils.Constants;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -26,10 +28,9 @@ public class ContactDetailFragment extends Fragment {
 
     private Contact contact;
 
-    int id=-1;
 
-    @Bind(R.id.item_fullname) TextView item_fullname;
-    @Bind(R.id.item_phone) TextView item_phone;
+    @Bind(R.id.item_fullname) TextView itemFullname;
+    @Bind(R.id.item_phone) TextView itemPhone;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -43,8 +44,12 @@ public class ContactDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(Constants.ARG_ITEM_ID)) {
-            id = getArguments().getInt(Constants.ARG_ITEM_ID);
+            int id = getArguments().getInt(Constants.ARG_ITEM_ID);
+
+            Realm realm = Realm.getInstance(this.getContext());
+            contact = RealmDAO.getContactById(realm, id);
         }
+
     }
 
     @Override
@@ -52,7 +57,10 @@ public class ContactDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.contact_detail, container, false);
         ButterKnife.bind(this, rootView);
-        item_fullname.setText("ID: " + id);
+        if(contact != null) {
+            itemFullname.setText(contact.getName() + " " + contact.getSurname());
+            itemPhone.setText(contact.getPhone());
+        }
         return rootView;
     }
 }
