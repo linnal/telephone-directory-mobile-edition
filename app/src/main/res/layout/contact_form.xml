@@ -20,13 +20,31 @@
         android:padding="16dp"
         android:textIsSelectable="true"
         tools:context=".fragments.ContactDetailFragment"
-        android:text="@string/fullname"/>
+        android:text="@string/name"/>
 
     <EditText
-        android:id="@+id/item_fullname"
+        android:id="@+id/contact_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"/>
+
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textIsSelectable="true"
+        tools:context=".fragments.ContactDetailFragment"
+        android:text="@string/surname"/>
+
+    <EditText
+        android:id="@+id/contact_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"/>
+
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -39,7 +57,7 @@
         android:text="@string/phone"/>
 
     <EditText
-        android:id="@+id/item_phone"
+        android:id="@+id/contact_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"/>

@@ -34,7 +34,7 @@ public class ContactItemView extends LinearLayout {
     }
 
     public void bind(Contact contact) {
-        complete_name.setText(contact.getFullName());
+        complete_name.setText(contact.getName() + " " + contact.getSurname());
         phone.setText(contact.getPhone());
     }
 }

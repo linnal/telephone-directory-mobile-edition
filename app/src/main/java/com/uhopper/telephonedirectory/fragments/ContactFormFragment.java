@@ -23,8 +23,9 @@ public class ContactFormFragment extends Fragment {
 
     int id=-1;
 
-    @Bind(R.id.item_fullname) EditText item_fullname;
-    @Bind(R.id.item_phone) EditText item_phone;
+    @Bind(R.id.contact_name) EditText contactName;
+    @Bind(R.id.contact_surname) EditText contactSurname;
+    @Bind(R.id.contact_phone) EditText contactPhone;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the

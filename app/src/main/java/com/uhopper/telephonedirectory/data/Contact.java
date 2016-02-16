@@ -18,18 +18,29 @@ public class Contact extends RealmObject{
     private int id;
 
     @Required
-    private  String fullName;
+    private  String name;
+
+    @Required
+    private  String surname;
 
     @Required
     private  String phone;
 
 
-    public String getFullName() {
-        return fullName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setFullName(String name) {
-        this.fullName = name;
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {

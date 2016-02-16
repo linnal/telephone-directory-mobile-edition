@@ -55,7 +55,7 @@ public class ContactListActivity extends AppCompatActivity {
         }
 
         realm = Realm.getInstance(this);
-        adapter = new RealmSearchViewAdapter(this, realm, "fullName", mTwoPane);
+        adapter = new RealmSearchViewAdapter(this, realm, "name", mTwoPane);
         searchView.setAdapter(adapter);
 
     }
