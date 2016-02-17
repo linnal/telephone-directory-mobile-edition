@@ -17,7 +17,7 @@ import com.uhopper.telephonedirectory.utils.Constants;
  */
 public class ContactFormActivity extends AppCompatActivity {
 
-    int id = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class ContactFormActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            id = getIntent().getIntExtra(Constants.ARG_ITEM_ID, 0);
+            int id = getIntent().getIntExtra(Constants.ARG_ITEM_ID, 0);
             arguments.putInt(Constants.ARG_ITEM_ID, id);
             ContactFormFragment fragment = new ContactFormFragment();
             fragment.setArguments(arguments);

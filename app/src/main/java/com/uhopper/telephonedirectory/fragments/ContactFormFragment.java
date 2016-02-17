@@ -32,7 +32,7 @@ public class ContactFormFragment extends Fragment {
     private Realm realm;
     private ContactDetailListener detailListener = null;
 
-    int id=-1;
+//    int id=-1;
 
     @Bind(R.id.contact_name) EditText contactName;
     @Bind(R.id.contact_surname) EditText contactSurname;
@@ -52,7 +52,10 @@ public class ContactFormFragment extends Fragment {
         realm = Realm.getInstance(this.getContext());
 
         if (getArguments().containsKey(Constants.ARG_ITEM_ID)) {
-            id = getArguments().getInt(Constants.ARG_ITEM_ID);
+            int id = getArguments().getInt(Constants.ARG_ITEM_ID);
+            if(id != -1) {
+                contact = RealmDAO.getContactById(realm, id);
+            }
         }
 
         if (getArguments().containsKey(Constants.ARG_TWO_PANE)) {
@@ -65,17 +68,32 @@ public class ContactFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.contact_form, container, false);
         ButterKnife.bind(this, rootView);
+
+        if(contact != null) {
+            contactName.setText(contact.getName());
+            contactSurname.setText(contact.getSurname());
+            contactPhone.setText(contact.getPhone());
+        }
+
         return rootView;
     }
 
     @OnClick(R.id.button_save)
     public void onSave(){
-        contact = new Contact();
-        contact.setName(contactName.getText().toString());
-        contact.setSurname(contactSurname.getText().toString());
-        contact.setPhone(contactPhone.getText().toString());
+        if(contact != null){
+            realm.beginTransaction();
+            contact.setName(contactName.getText().toString());
+            contact.setSurname(contactSurname.getText().toString());
+            contact.setPhone(contactPhone.getText().toString());
+            realm.commitTransaction();
+        }else {
+            contact = new Contact();
+            contact.setName(contactName.getText().toString());
+            contact.setSurname(contactSurname.getText().toString());
+            contact.setPhone(contactPhone.getText().toString());
 
-        RealmDAO.saveContact(realm, contact);
+            RealmDAO.saveContact(realm, contact);
+        }
 
         if(detailListener != null){
             detailListener.onUpdate(contact.getId());

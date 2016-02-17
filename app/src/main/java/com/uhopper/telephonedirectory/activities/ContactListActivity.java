@@ -93,9 +93,27 @@ public class ContactListActivity extends AppCompatActivity implements ContactDet
         Toast.makeText(this, "New contact added", Toast.LENGTH_LONG).show();
 
         if(adapter != null){
-            adapter.notifyItemInserted(adapter.getItemCount());
+            adapter.notifyDataSetChanged();
         }
 
         adapter.setFragment(id);
+    }
+
+
+    @Override
+    public void showForm(int id) {
+
+        if(adapter != null){
+            adapter.notifyDataSetChanged();
+        }
+
+        Bundle arguments = new Bundle();
+        arguments.putInt(Constants.ARG_ITEM_ID, id);
+        arguments.putInt(Constants.ARG_TWO_PANE, 1);
+        ContactFormFragment fragment = new ContactFormFragment();
+        fragment.setArguments(arguments);
+        this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contact_detail_container, fragment)
+                .commit();
     }
 }

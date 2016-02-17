@@ -110,6 +110,9 @@ public class RealmSearchViewAdapter extends RealmSearchAdapter<Contact, RealmSea
     public void setFragment(int id){
         Bundle arguments = new Bundle();
         arguments.putInt(Constants.ARG_ITEM_ID, id);
+        if(mTwoPane) {
+            arguments.putInt(Constants.ARG_TWO_PANE, 1);
+        }
         ContactDetailFragment fragment = new ContactDetailFragment();
         fragment.setArguments(arguments);
         activity.getSupportFragmentManager().beginTransaction()

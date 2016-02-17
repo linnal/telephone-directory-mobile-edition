@@ -5,4 +5,5 @@ package com.uhopper.telephonedirectory.interfaces;
  */
 public interface ContactDetailListener {
     void onUpdate(int id);
+    void showForm(int id);
 }

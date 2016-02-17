@@ -2,7 +2,6 @@ package com.uhopper.telephonedirectory.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +13,7 @@ import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.fragments.ContactDetailFragment;
 import com.uhopper.telephonedirectory.utils.Constants;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -26,12 +26,16 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     int id = -1;
 
+    ContactDetailFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+
+        ButterKnife.bind(this);
 
 
         // Show the Up button in the action bar.
@@ -51,7 +55,7 @@ public class ContactDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             id = getIntent().getIntExtra(Constants.ARG_ITEM_ID, 0);
             arguments.putInt(Constants.ARG_ITEM_ID, id);
-            ContactDetailFragment fragment = new ContactDetailFragment();
+            fragment = new ContactDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contact_detail_container, fragment)
@@ -61,8 +65,16 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_edit)
     public void editContact(View view) {
-        Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        Intent intent = new Intent(this, ContactFormActivity.class);
+        intent.putExtra(Constants.ARG_ITEM_ID, id);
+        this.startActivityForResult(intent, Constants.ARG_REQUEST_CODE_FORM);
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        fragment.updateContent();
     }
 
     @Override
