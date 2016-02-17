@@ -16,7 +16,11 @@ import com.uhopper.telephonedirectory.utils.Constants;
 
 import co.moonmonkeylabs.realmsearchview.RealmSearchAdapter;
 import co.moonmonkeylabs.realmsearchview.RealmSearchViewHolder;
+import io.realm.Case;
 import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by erinda on 2/15/16.
@@ -70,6 +74,23 @@ public class RealmSearchViewAdapter extends RealmSearchAdapter<Contact, RealmSea
         );
     }
 
+    @Override
+    public void filter(String input){
+        RealmResults<Contact> businesses;
+        RealmQuery<Contact> where = realm.where(clazz);
+        if (input.isEmpty()) {
+            businesses = where.findAllSorted("name", Sort.DESCENDING);
+        }else{
+            businesses = where.contains("name", input, Case.INSENSITIVE)
+                    .or()
+                    .contains("surname", input, Case.INSENSITIVE)
+                    .or()
+                    .contains("phone", input, Case.INSENSITIVE)
+                    .findAll();
+        }
+
+        updateRealmResults(businesses);
+    }
 
     public class ViewHolder extends RealmSearchViewHolder {
 
