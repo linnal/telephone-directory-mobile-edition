@@ -6,5 +6,6 @@
     <string name="phone">Phone Number</string>
     <string name="rubrica">Import from contacts</string>
     <string name="save">Save contact</string>
+    <string name="update">Update contact</string>
     <string name="edit">Edit contact</string>
 </resources>

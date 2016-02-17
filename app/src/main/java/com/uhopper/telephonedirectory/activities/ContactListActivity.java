@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.adapters.RealmSearchViewAdapter;
@@ -85,12 +84,11 @@ public class ContactListActivity extends AppCompatActivity implements ContactDet
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        adapter.notifyItemInserted(adapter.getItemCount());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onUpdate(int id) {
-        Toast.makeText(this, "New contact added", Toast.LENGTH_LONG).show();
 
         if(adapter != null){
             adapter.notifyDataSetChanged();

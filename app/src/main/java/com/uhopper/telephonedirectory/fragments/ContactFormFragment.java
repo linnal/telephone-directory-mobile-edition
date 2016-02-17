@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -38,9 +39,10 @@ public class ContactFormFragment extends Fragment {
 
 //    int id=-1;
 
-    @Bind(R.id.contact_name) EditText contactName;
+    @Bind(R.id.contact_name)    EditText contactName;
     @Bind(R.id.contact_surname) EditText contactSurname;
-    @Bind(R.id.contact_phone) EditText contactPhone;
+    @Bind(R.id.contact_phone)   EditText contactPhone;
+    @Bind(R.id.button_save)     Button buttonSave;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -77,6 +79,8 @@ public class ContactFormFragment extends Fragment {
             contactName.setText(contact.getName());
             contactSurname.setText(contact.getSurname());
             contactPhone.setText(contact.getPhone());
+
+            buttonSave.setText(R.string.update);
         }
 
         return rootView;
@@ -130,12 +134,15 @@ public class ContactFormFragment extends Fragment {
                 RealmDAO.saveContact(realm, contact);
             }
 
+            Toast.makeText(this.getActivity(), "New contact added", Toast.LENGTH_LONG).show();
+
             if (detailListener != null) {
                 detailListener.onUpdate(contact.getId());
             } else {
                 this.getActivity().setResult(Constants.ARG_RESPONSE_CODE_FORM);
                 this.getActivity().finish();
             }
+
         }
     }
 
