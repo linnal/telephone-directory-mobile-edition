@@ -95,21 +95,32 @@ public class ContactFormFragment extends Fragment {
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
 
-        Uri uriContact = data.getData();
+        if(data != null && data.getData() != null) {
 
-        retriveContactName(uriContact);
-        retrieveContactNumber(uriContact);
+            Uri uriContact = data.getData();
+
+            retriveContactName(uriContact);
+            retrieveContactNumber(uriContact);
+        }
     }
 
 
     private void retriveContactName(Uri uriContact){
         Cursor cursor = this.getActivity().getContentResolver().query(uriContact, null, null, null, null);
-        String contactName = null;
+        String displayName = null;
         if (cursor.moveToFirst()) {
-            contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
         }
         cursor.close();
-        Log.d("DEBUG", contactName );
+
+        String[] arr = displayName.split(" ");
+        if(arr.length > 1){
+            contactName.setText(arr[0]);
+            contactSurname.setText(arr[1]);
+        }else{
+            contactName.setText(arr[0]);
+        }
+
     }
 
 
@@ -129,8 +140,6 @@ public class ContactFormFragment extends Fragment {
 
         cursorID.close();
 
-        Log.d("DEBUG", "Contact ID: " + contactID);
-
         // Using the contact ID now we will get contact phone number
         Cursor cursorPhone = this.getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER},
@@ -149,6 +158,10 @@ public class ContactFormFragment extends Fragment {
         cursorPhone.close();
 
         Log.d("DEBUG", "Contact Phone Number: " + contactNumber);
+
+        if(contactNumber != null){
+            contactPhone.setText(contactNumber);
+        }
     }
 
 }
