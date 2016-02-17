@@ -11,12 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.data.Contact;
 import com.uhopper.telephonedirectory.data.RealmDAO;
 import com.uhopper.telephonedirectory.interfaces.ContactDetailListener;
 import com.uhopper.telephonedirectory.utils.Constants;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -78,28 +82,60 @@ public class ContactFormFragment extends Fragment {
         return rootView;
     }
 
-    @OnClick(R.id.button_save)
-    public void onSave(){
-        if(contact != null){
-            realm.beginTransaction();
-            contact.setName(contactName.getText().toString());
-            contact.setSurname(contactSurname.getText().toString());
-            contact.setPhone(contactPhone.getText().toString());
-            realm.commitTransaction();
-        }else {
-            contact = new Contact();
-            contact.setName(contactName.getText().toString());
-            contact.setSurname(contactSurname.getText().toString());
-            contact.setPhone(contactPhone.getText().toString());
 
-            RealmDAO.saveContact(realm, contact);
+    public boolean validateFields(){
+        String name     = contactName.getText().toString().trim();
+        String surname  = contactSurname.getText().toString().trim();
+        String number   = contactPhone.getText().toString().trim();
+
+
+        if(name.isEmpty()){
+            Toast.makeText(this.getContext(), "Name not valid", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(surname.isEmpty()){
+            Toast.makeText(this.getContext(), "Surname not valid", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(number.isEmpty()){
+            Toast.makeText(this.getContext(), "Phone number not valid", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            String numberExpression = "\\+\\d+ \\d+ \\d{6,}";
+            Pattern pattern = Pattern.compile(numberExpression);
+            Matcher matcher = pattern.matcher(number);
+            if(!matcher.matches()){
+                Toast.makeText(this.getContext(), "Phone number format not valid", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
 
-        if(detailListener != null){
-            detailListener.onUpdate(contact.getId());
-        }else{
-            this.getActivity().setResult(Constants.ARG_RESPONSE_CODE_FORM);
-            this.getActivity().finish();
+        return true;
+    }
+
+    @OnClick(R.id.button_save)
+    public void onSave(){
+
+        if(validateFields()) {
+            if (contact != null) {
+                realm.beginTransaction();
+                contact.setName(contactName.getText().toString());
+                contact.setSurname(contactSurname.getText().toString());
+                contact.setPhone(contactPhone.getText().toString());
+                realm.commitTransaction();
+            } else {
+                contact = new Contact();
+                contact.setName(contactName.getText().toString());
+                contact.setSurname(contactSurname.getText().toString());
+                contact.setPhone(contactPhone.getText().toString());
+
+                RealmDAO.saveContact(realm, contact);
+            }
+
+            if (detailListener != null) {
+                detailListener.onUpdate(contact.getId());
+            } else {
+                this.getActivity().setResult(Constants.ARG_RESPONSE_CODE_FORM);
+                this.getActivity().finish();
+            }
         }
     }
 
