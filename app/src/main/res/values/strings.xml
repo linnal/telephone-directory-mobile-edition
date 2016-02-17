@@ -4,6 +4,7 @@
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="phone">Phone Number</string>
-    <string name="rubrica">Import from rubrica</string>
+    <string name="rubrica">Import from contacts</string>
     <string name="save">Save contact</string>
+    <string name="edit">Edit contact</string>
 </resources>
