@@ -8,8 +8,8 @@ import android.view.View;
 
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.adapters.RealmSearchViewAdapter;
+import com.uhopper.telephonedirectory.fragments.ContactDetailFragment;
 import com.uhopper.telephonedirectory.fragments.ContactFormFragment;
-import com.uhopper.telephonedirectory.interfaces.ContactDetailListener;
 import com.uhopper.telephonedirectory.utils.Constants;
 
 import butterknife.ButterKnife;
@@ -25,7 +25,7 @@ import io.realm.Realm;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class ContactListActivity extends AppCompatActivity implements ContactDetailListener{
+public class ContactListActivity extends AppCompatActivity{
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -63,21 +63,7 @@ public class ContactListActivity extends AppCompatActivity implements ContactDet
 
     @OnClick(R.id.button_add)
     public void addNewContact(View view) {
-
-        if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putInt(Constants.ARG_ITEM_ID, -1);
-            arguments.putInt(Constants.ARG_TWO_PANE, 1);
-            ContactFormFragment fragment = new ContactFormFragment();
-            fragment.setArguments(arguments);
-            this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.contact_detail_container, fragment)
-                    .commit();
-        } else {
-            Intent intent = new Intent(this, ContactFormActivity.class);
-            intent.putExtra(Constants.ARG_ITEM_ID, -1);
-            this.startActivityForResult(intent, Constants.ARG_REQUEST_CODE_FORM);
-        }
+        showForm(-1);
     }
 
 
@@ -87,31 +73,38 @@ public class ContactListActivity extends AppCompatActivity implements ContactDet
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onUpdate(int id) {
 
-        if(adapter != null){
+
+
+    public void showDetail(int id){
+        if (mTwoPane) {
             adapter.notifyDataSetChanged();
-        }
 
-        adapter.setFragment(id);
+            ContactDetailFragment fragment = ContactDetailFragment.newInstance(id, mTwoPane);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.contact_detail_container, fragment)
+                    .commit();
+        }else{
+            Intent intent = new Intent(this, ContactDetailActivity.class);
+            intent.putExtra(Constants.ARG_ITEM_ID, id);
+
+            startActivity(intent);
+        }
     }
 
-
-    @Override
-    public void showForm(int id) {
-
-        if(adapter != null){
+    public void showForm(int id){
+        if (mTwoPane) {
             adapter.notifyDataSetChanged();
-        }
 
-        Bundle arguments = new Bundle();
-        arguments.putInt(Constants.ARG_ITEM_ID, id);
-        arguments.putInt(Constants.ARG_TWO_PANE, 1);
-        ContactFormFragment fragment = new ContactFormFragment();
-        fragment.setArguments(arguments);
-        this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.contact_detail_container, fragment)
-                .commit();
+            ContactFormFragment fragment = ContactFormFragment.newInstance(id, mTwoPane);
+            this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.contact_detail_container, fragment)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, ContactFormActivity.class);
+            intent.putExtra(Constants.ARG_ITEM_ID, id);
+            this.startActivityForResult(intent, Constants.ARG_REQUEST_CODE_FORM);
+        }
     }
+
 }

@@ -13,7 +13,6 @@ import com.uhopper.telephonedirectory.activities.ContactDetailActivity;
 import com.uhopper.telephonedirectory.activities.ContactListActivity;
 import com.uhopper.telephonedirectory.data.Contact;
 import com.uhopper.telephonedirectory.data.RealmDAO;
-import com.uhopper.telephonedirectory.interfaces.ContactDetailListener;
 import com.uhopper.telephonedirectory.utils.Constants;
 
 import butterknife.Bind;
@@ -32,7 +31,7 @@ public class ContactDetailFragment extends Fragment {
     private int id = -1;
     private Realm realm;
 
-    private ContactDetailListener detailListener = null;
+    private ContactListActivity contactListActivity = null;
 
     @Bind(R.id.item_fullname) TextView itemFullname;
     @Bind(R.id.item_phone) TextView itemPhone;
@@ -45,6 +44,26 @@ public class ContactDetailFragment extends Fragment {
     public ContactDetailFragment() {
     }
 
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param id contact id.
+     * @param mTwoPane true on large screens.
+     * @return A new instance of fragment BlankFragment.
+     */
+    public static ContactDetailFragment newInstance(int id, boolean mTwoPane) {
+        ContactDetailFragment fragment = new ContactDetailFragment();
+        Bundle args = new Bundle();
+        args.putInt(Constants.ARG_ITEM_ID, id);
+        args.putBoolean(Constants.ARG_TWO_PANE, mTwoPane);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +73,8 @@ public class ContactDetailFragment extends Fragment {
             realm = Realm.getInstance(this.getContext());
         }
 
-        if (getArguments().containsKey(Constants.ARG_TWO_PANE)) {
-            detailListener = (ContactDetailListener) this.getActivity();
+        if (getArguments().getBoolean(Constants.ARG_TWO_PANE, false)) {
+            contactListActivity = (ContactListActivity) this.getActivity();
         }
 
     }
@@ -70,8 +89,8 @@ public class ContactDetailFragment extends Fragment {
             updateContent();
         }
 
-        // just for smartphones
-        if(detailListener == null){
+        // just for smartphones hide the edit button of the fragment
+        if(contactListActivity == null){
             buttonEdit.setVisibility(View.INVISIBLE);
         }
 
@@ -80,8 +99,8 @@ public class ContactDetailFragment extends Fragment {
 
     @OnClick(R.id.button_edit)
     public void onEditClick(){
-        if(detailListener != null){
-            detailListener.showForm(id);
+        if(contactListActivity != null){
+            contactListActivity.showForm(id);
         }
     }
 

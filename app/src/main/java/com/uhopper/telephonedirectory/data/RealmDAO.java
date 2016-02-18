@@ -11,11 +11,9 @@ public class RealmDAO {
     public static int saveContact(Realm realm, Contact contact){
 
         Number id = realm.where(contact.getClass()).max("id");
-        int nextID = 0;
-        // increatement index
-        if(id != null){
-            nextID =  id.intValue() + 1;
-        }
+
+        // increment index
+        int nextID = (id != null) ? id.intValue() + 1 : 0;
 
         contact.setId(nextID);
 
@@ -29,5 +27,13 @@ public class RealmDAO {
     public static Contact getContactById(Realm realm, int id){
         RealmQuery<Contact> query = realm.where(Contact.class);
         return query.equalTo("id", id).findFirst();
+    }
+
+    public static void updateContact(Realm realm, Contact contact, String name, String surname, String phoneNumber){
+        realm.beginTransaction();
+        contact.setName(name);
+        contact.setSurname(surname);
+        contact.setPhone(phoneNumber);
+        realm.commitTransaction();
     }
 }

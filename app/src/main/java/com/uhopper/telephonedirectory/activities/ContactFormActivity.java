@@ -41,11 +41,8 @@ public class ContactFormActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            Bundle arguments = new Bundle();
             int id = getIntent().getIntExtra(Constants.ARG_ITEM_ID, 0);
-            arguments.putInt(Constants.ARG_ITEM_ID, id);
-            ContactFormFragment fragment = new ContactFormFragment();
-            fragment.setArguments(arguments);
+            ContactFormFragment fragment = ContactFormFragment.newInstance(id, false);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contact_form_container, fragment)
                     .commit();

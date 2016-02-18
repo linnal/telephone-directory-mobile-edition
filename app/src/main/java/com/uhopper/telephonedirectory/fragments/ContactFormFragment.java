@@ -15,9 +15,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.uhopper.telephonedirectory.R;
+import com.uhopper.telephonedirectory.activities.ContactListActivity;
 import com.uhopper.telephonedirectory.data.Contact;
 import com.uhopper.telephonedirectory.data.RealmDAO;
-import com.uhopper.telephonedirectory.interfaces.ContactDetailListener;
 import com.uhopper.telephonedirectory.utils.Constants;
 
 import java.util.regex.Matcher;
@@ -35,9 +35,7 @@ public class ContactFormFragment extends Fragment {
 
     private Contact contact;
     private Realm realm;
-    private ContactDetailListener detailListener = null;
-
-//    int id=-1;
+    private ContactListActivity contactListActivity = null;
 
     @Bind(R.id.contact_name)    EditText contactName;
     @Bind(R.id.contact_surname) EditText contactSurname;
@@ -49,6 +47,24 @@ public class ContactFormFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public ContactFormFragment() {
+    }
+
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param id contact id.
+     * @param mTwoPane true on large screens.
+     * @return A new instance of fragment BlankFragment.
+     */
+    public static ContactFormFragment newInstance(int id, boolean mTwoPane) {
+        ContactFormFragment fragment = new ContactFormFragment();
+        Bundle args = new Bundle();
+        args.putInt(Constants.ARG_ITEM_ID, id);
+        args.putBoolean(Constants.ARG_TWO_PANE, mTwoPane);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -64,8 +80,8 @@ public class ContactFormFragment extends Fragment {
             }
         }
 
-        if (getArguments().containsKey(Constants.ARG_TWO_PANE)) {
-            detailListener = (ContactDetailListener) this.getActivity();
+        if (getArguments().getBoolean(Constants.ARG_TWO_PANE, false)) {
+            contactListActivity = (ContactListActivity) this.getActivity();
         }
     }
 
@@ -99,9 +115,6 @@ public class ContactFormFragment extends Fragment {
         }else if(surname.isEmpty()){
             Toast.makeText(this.getContext(), "Surname not valid", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(number.isEmpty()){
-            Toast.makeText(this.getContext(), "Phone number not valid", Toast.LENGTH_SHORT).show();
-            return false;
         }else{
             String numberExpression = "\\+\\d+ \\d+ \\d{6,}";
             Pattern pattern = Pattern.compile(numberExpression);
@@ -120,24 +133,21 @@ public class ContactFormFragment extends Fragment {
 
         if(validateFields()) {
             if (contact != null) {
-                realm.beginTransaction();
-                contact.setName(contactName.getText().toString());
-                contact.setSurname(contactSurname.getText().toString());
-                contact.setPhone(contactPhone.getText().toString());
-                realm.commitTransaction();
+                RealmDAO.updateContact(realm, contact,  contactName.getText().toString(),
+                                                        contactSurname.getText().toString(),
+                                                        contactPhone.getText().toString());
             } else {
-                contact = new Contact();
-                contact.setName(contactName.getText().toString());
-                contact.setSurname(contactSurname.getText().toString());
-                contact.setPhone(contactPhone.getText().toString());
+                contact = new Contact(  contactName.getText().toString(),
+                                        contactSurname.getText().toString(),
+                                        contactPhone.getText().toString());
 
                 RealmDAO.saveContact(realm, contact);
             }
 
             Toast.makeText(this.getActivity(), "New contact added", Toast.LENGTH_LONG).show();
 
-            if (detailListener != null) {
-                detailListener.onUpdate(contact.getId());
+            if (contactListActivity != null) {
+                contactListActivity.showDetail(contact.getId());
             } else {
                 this.getActivity().setResult(Constants.ARG_RESPONSE_CODE_FORM);
                 this.getActivity().finish();
@@ -160,13 +170,13 @@ public class ContactFormFragment extends Fragment {
 
             Uri uriContact = data.getData();
 
-            retriveContactName(uriContact);
+            retrieveContactName(uriContact);
             retrieveContactNumber(uriContact);
         }
     }
 
 
-    private void retriveContactName(Uri uriContact){
+    private void retrieveContactName(Uri uriContact){
         Cursor cursor = this.getActivity().getContentResolver().query(uriContact, null, null, null, null);
         String displayName = null;
         if (cursor.moveToFirst()) {
@@ -195,7 +205,6 @@ public class ContactFormFragment extends Fragment {
                 null, null, null);
 
         if (cursorID.moveToFirst()) {
-
             contactID = cursorID.getString(cursorID.getColumnIndex(ContactsContract.Contacts._ID));
         }
 
