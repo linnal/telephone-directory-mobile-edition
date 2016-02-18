@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/edit"/>
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/item_fullname"
         style="?android:attr/textAppearanceLarge"
@@ -23,7 +23,7 @@
         tools:context=".fragment.ItemDetailFragment" />
 
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/item_phone"
         style="?android:attr/textAppearanceLarge"
