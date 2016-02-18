@@ -28,15 +28,33 @@ The application consists of the following pages:
 * Screen rotation handling
 
 
-## General requirements
-- You may use **iOS** or **Android** platform and whatever programming language you prefer. Use something that you know well.
-- You should commit your code on **GitHub** or any other SCM repository you prefer (e.g. bitbucket, gitlab, etc) and send us the link.
-- You should release your work with an OSI-approved open-source **license** of your choice.
-- You should deliver the sources of your application, with __a README__ that explains how to compile and run it.
+## How to compile and run it
 
-**IMPORTANT:**  Implement the requirements focusing on **writing the best code** you can produce.
+From terminal
+
+- Compile
+
+     `./gradlew assembleDebug`
+    
+- Run on device/emulator
+
+    `./gradlew installDebug`
+    
+    
+or Import in Android Studio and press run
 
 
+## Technologies used
+
+[Butter Knife](http://jakewharton.github.io/butterknife/)  Field and method binding for Android views
+
+[Realm](https://realm.io/docs/java/latest/) enables you to efficiently write your app’s model layer in a safe, persisted and fast way. 
+
+[Realm SearchView](https://github.com/thorbenprimke/realm-searchview) A simple and powerful EditText and RecyclerView UI component. It's build on top of RealmRecyclerView and RealmBasedRecyclerViewAdapter
+
+
+
+=========
 ## License
 
     Copyright 2016 Erinda Jaupaj
