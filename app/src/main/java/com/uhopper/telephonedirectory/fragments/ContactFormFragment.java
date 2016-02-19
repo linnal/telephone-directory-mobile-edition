@@ -16,12 +16,15 @@
 
 package com.uhopper.telephonedirectory.fragments;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -174,8 +177,14 @@ public class ContactFormFragment extends Fragment {
 
     @OnClick(R.id.button_rubrica)
     public void importFromRubrica(){
-        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        startActivityForResult(intent, 3);
+
+        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this.getContext(), "No permission granted for this functionality", Toast.LENGTH_SHORT).show();
+        }else {
+            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+            startActivityForResult(intent, 3);
+        }
     }
 
     @Override

@@ -25,4 +25,6 @@ public class Constants {
 
     public static final int ARG_REQUEST_CODE_FORM = 1;
     public static final int ARG_RESPONSE_CODE_FORM = 2;
+
+    public static  final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 42;
 }

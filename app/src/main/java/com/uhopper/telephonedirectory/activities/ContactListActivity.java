@@ -16,11 +16,16 @@
 
 package com.uhopper.telephonedirectory.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.uhopper.telephonedirectory.R;
 import com.uhopper.telephonedirectory.adapters.RealmSearchViewAdapter;
@@ -75,6 +80,8 @@ public class ContactListActivity extends AppCompatActivity{
         adapter = new RealmSearchViewAdapter(this, realm, "name", mTwoPane);
         searchView.setAdapter(adapter);
 
+        askReadContactPermission();
+
     }
 
     @OnClick(R.id.button_add)
@@ -122,5 +129,47 @@ public class ContactListActivity extends AppCompatActivity{
             this.startActivityForResult(intent, Constants.ARG_REQUEST_CODE_FORM);
         }
     }
+
+
+    void askReadContactPermission(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else { 
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CONTACTS},
+                        Constants.MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case Constants.MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // do stuff
+                } else {
+                    Toast.makeText(this, "You will not be able to import your contacts.", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+
 
 }
